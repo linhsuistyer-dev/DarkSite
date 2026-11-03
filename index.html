@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thông báo từ Grab Việt Nam (trang mô phỏng)</title>
+<style>
+  :root{
+    --green:#00b14f; --green-d:#008a3d; --ink:#1d1f22; --muted:#5b6168; --line:#e3e7e5;
+    --soft:#f3f8f5; --alert:#fff4e5; --alert-line:#f0a24b; --alert-ink:#7a4a00; --sim:#fff8c5;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+  a{color:var(--green-d)}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+  /* thanh mô phỏng */
+  .simbar{background:var(--sim);border-top:1px solid #e6d96b;text-align:center;padding:12px 20px;font-size:14px}
+  .simbar button{border:1px solid #b9a900;background:#fff;border-radius:999px;padding:6px 14px;font:inherit;cursor:pointer}
+  .simbar button:hover{background:#fffbe0}
+
+  /* header */
+  header.top{border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:5}
+  header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+  .logo{font-weight:800;font-size:30px;letter-spacing:-1px;color:var(--green);text-decoration:none}
+  nav.main{display:flex;gap:22px;font-size:15px;flex-wrap:wrap}
+  nav.main a{color:var(--ink);text-decoration:none}
+  nav.main a:hover{color:var(--green-d)}
+  .right{display:flex;gap:14px;align-items:center;font-size:14px;color:var(--muted)}
+
+  /* thanh thông báo khẩn */
+  .alertbar{background:var(--alert);border-bottom:1px solid var(--alert-line);color:var(--alert-ink)}
+  .alertbar .wrap{padding-top:10px;padding-bottom:10px;font-size:14.5px}
+  .tag{display:inline-block;background:#d9480f;color:#fff;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:700;margin-right:8px}
+
+  /* hero */
+  .hero{padding:56px 0 36px;background:linear-gradient(180deg,#fff 0%,var(--soft) 100%)}
+  .hero h1{font-size:clamp(28px,4.4vw,44px);line-height:1.2;margin:0 0 14px;letter-spacing:-.5px}
+  .hero .lead{font-size:18px;color:#31363b;max-width:760px}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:28px}
+  .fact{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+  .fact small{display:block;color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+  .fact b{font-size:16px}
+  .ph{background:#fff3b0;border-radius:4px;padding:0 4px;font-weight:600}
+  .btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+  .btn{display:inline-block;border-radius:999px;padding:12px 24px;font-weight:700;text-decoration:none;font-size:15px}
+  .btn.p{background:var(--green);color:#fff}
+  .btn.p:hover{background:var(--green-d)}
+  .btn.s{border:2px solid var(--green);color:var(--green-d);background:#fff}
+
+  section{padding:48px 0}
+  section.alt{background:var(--soft)}
+  h2{font-size:28px;margin:0 0 8px;letter-spacing:-.3px}
+  .sub{color:var(--muted);margin:0 0 24px;max-width:720px}
+
+  /* tab đối tượng */
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 18px;font:inherit;cursor:pointer}
+  .tabs button[aria-selected="true"]{background:var(--green);color:#fff;border-color:var(--green)}
+  .panel{display:none;background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+  .panel.on{display:block}
+  .panel ul{margin:8px 0 0;padding-left:20px}
+
+  /* timeline */
+  .tl{list-style:none;margin:0;padding:0;border-left:3px solid var(--green)}
+  .tl li{margin:0 0 18px 18px;position:relative}
+  .tl li::before{content:"";position:absolute;left:-27px;top:6px;width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--green)}
+  .tl time{font-weight:700;display:block}
+
+  /* faq */
+  .grp{margin:0 0 26px}
+  .grp h3{font-size:18px;margin:0 0 10px;color:var(--green-d)}
+  details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px;padding:2px 16px}
+  summary{cursor:pointer;font-weight:600;padding:12px 0}
+  details p{margin:0 0 14px;color:#2d3238}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px}
+  .card h3{margin:0 0 6px;font-size:18px}
+
+  .note{background:#fff;border-left:5px solid var(--green);padding:14px 18px;border-radius:8px;border:1px solid var(--line);border-left-width:5px}
+
+  footer{background:#12281b;color:#cfe3d6;padding:42px 0 26px;font-size:14px}
+  footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px}
+  footer h4{color:#fff;margin:0 0 10px}
+  footer a{color:#cfe3d6;text-decoration:none;display:block;margin-bottom:6px}
+  footer a:hover{text-decoration:underline}
+  footer .legal{border-top:1px solid #2e4a39;margin-top:26px;padding-top:16px;color:#9fbfae}
+
+  /* trạng thái dark site chưa kích hoạt */
+  .inactive-msg{display:none;padding:80px 0;text-align:center}
+  body.off .crisis{display:none}
+  body.off .inactive-msg{display:block}
+  body.off .alertbar{display:none}
+
+  @media (max-width:720px){
+    header.top .wrap{height:auto;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+    nav.main{gap:14px}
+    section{padding:34px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Trang chủ">Grab</a>
+    <nav class="main" aria-label="Điều hướng chính">
+      <a href="#">Về Grab</a>
+      <a href="#">Người dùng</a>
+      <a href="#">Đối tác tài xế</a>
+      <a href="#">Đối tác thương nhân</a>
+      <a href="#">Trung tâm hỗ trợ</a>
+    </nav>
+    <div class="right"><span>Tiếng Việt</span><span>|</span><span>English</span></div>
+  </div>
+</header>
+
+<div class="alertbar crisis">
+  <div class="wrap"><span class="tag">THÔNG BÁO</span>Grab Việt Nam đang cập nhật thông tin về <span class="ph">[tên sự việc]</span>. Cập nhật lần cuối: <span class="ph">[giờ, ngày/tháng/năm]</span>.</div>
+</div>
+
+<main>
+  <!-- trạng thái khi chưa kích hoạt -->
+  <div class="inactive-msg wrap">
+    <h2>Dark site chưa được kích hoạt</h2>
+    <p class="sub" style="margin:0 auto">Toàn bộ nội dung bên dưới đã được soạn sẵn nhưng chưa hiển thị với công chúng. Khi CMT xác nhận sự cố và quyết định triển khai CCP, đường dẫn được bật và trang này xuất hiện từ website chính.</p>
+  </div>
+
+  <div class="crisis">
+    <!-- 1. holding statement -->
+    <div class="hero">
+      <div class="wrap">
+        <h1>Thông báo của Grab Việt Nam về <span class="ph">[tên sự việc]</span></h1>
+        <p class="lead">Grab đã ghi nhận sự việc xảy ra tại <span class="ph">[địa điểm]</span> vào <span class="ph">[thời điểm]</span>. Chúng tôi đang làm việc để xác minh và sẽ cập nhật tại trang này ngay khi có thông tin chính xác.</p>
+        <div class="facts" aria-label="Thông tin chính">
+          <div class="fact"><small>Chuyện gì đã xảy ra</small><b><span class="ph">[mô tả ngắn]</span></b></div>
+          <div class="fact"><small>Ở đâu</small><b><span class="ph">[địa điểm / khu vực]</span></b></div>
+          <div class="fact"><small>Nguyên nhân</small><b>Đang được xác minh <span class="ph">[hoặc nêu nguyên nhân nếu đã biết]</span></b></div>
+          <div class="fact"><small>Bước tiếp theo</small><b><span class="ph">[hành động Grab đang thực hiện]</span></b></div>
+        </div>
+        <div class="btns">
+          <a class="btn p" href="#cap-nhat">Xem diễn biến cập nhật</a>
+          <a class="btn s" href="#faq">Câu hỏi thường gặp</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. theo đối tượng -->
+    <section>
+      <div class="wrap">
+        <h2>Thông tin theo từng nhóm</h2>
+        <p class="sub">Chọn nhóm của bạn để xem thông tin và cách được hỗ trợ.</p>
+        <div class="tabs" role="tablist">
+          <button role="tab" aria-selected="true" data-t="u">Người dùng</button>
+          <button role="tab" aria-selected="false" data-t="d">Đối tác tài xế</button>
+          <button role="tab" aria-selected="false" data-t="m">Đối tác thương nhân</button>
+          <button role="tab" aria-selected="false" data-t="b">Báo chí</button>
+        </div>
+        <div class="panel on" id="p-u">
+          <b>Dành cho người dùng</b>
+          <ul>
+            <li>Thông tin về ảnh hưởng đến dịch vụ: <span class="ph">[dịch vụ, khu vực, thời gian]</span>.</li>
+            <li>Cần hỗ trợ về chuyến đi hoặc đơn hàng: dùng mục Trợ giúp trong ứng dụng Grab.</li>
+            <li>Grab không yêu cầu cung cấp mã OTP hoặc mật khẩu. Hãy cảnh giác với tin nhắn, cuộc gọi mạo danh.</li>
+          </ul>
+        </div>
+        <div class="panel" id="p-d">
+          <b>Dành cho đối tác tài xế</b>
+          <ul>
+            <li>Thông tin về ảnh hưởng đến công việc: <span class="ph">[nội dung]</span>.</li>
+            <li>Mọi thắc mắc: vào mục Trợ Giúp trực tiếp trên ứng dụng Grab Driver để được hỗ trợ.</li>
+            <li>Chỉ làm việc qua các kênh chính thức của Grab; không cung cấp OTP, mật khẩu hay chuyển tiền ngoài ứng dụng.</li>
+          </ul>
+        </div>
+        <div class="panel" id="p-m">
+          <b>Dành cho đối tác thương nhân</b>
+          <ul>
+            <li>Thông tin về đơn hàng và vận hành quán: <span class="ph">[nội dung]</span>.</li>
+            <li>Kênh hỗ trợ đối tác thương nhân: <span class="ph">[kênh liên hệ]</span>.</li>
+          </ul>
+        </div>
+        <div class="panel" id="p-b">
+          <b>Dành cho báo chí</b>
+          <ul>
+            <li>Hồ sơ công ty, hình ảnh, video, logo và thông tin liên hệ truyền thông: xem <a href="https://www.grab.com/vn/pressdownload/" target="_blank" rel="noopener">Thư viện báo chí của Grab</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. diễn biến -->
+    <section class="alt" id="cap-nhat">
+      <div class="wrap">
+        <h2>Diễn biến và cập nhật</h2>
+        <p class="sub">Các cập nhật mới nhất nằm ở trên cùng. Nội dung chỉ được đăng sau khi đã xác minh.</p>
+        <ul class="tl">
+          <li><time><span class="ph">[giờ, ngày]</span></time>Cập nhật mới nhất: <span class="ph">[nội dung]</span>.</li>
+          <li><time><span class="ph">[giờ, ngày]</span></time>Grab xác nhận sự việc và kích hoạt trang thông báo này.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. FAQ -->
+    <section id="faq">
+      <div class="wrap">
+        <h2>Câu hỏi thường gặp</h2>
+        <p class="sub">Các câu hỏi được chuẩn bị trước theo từng nhóm vấn đề.</p>
+
+        <div class="grp">
+          <h3>Thu nhập và chiết khấu của tài xế</h3>
+          <details><summary>Hiện nay Grab thu phí tài xế theo cơ chế nào?</summary>
+            <p>Từ năm 2024, Grab áp dụng phí sử dụng ứng dụng linh động cho đối tác 2 bánh. Đây là phần chênh lệch giữa tổng cước người dùng thanh toán và doanh thu vận tải tài xế nhận được, có thể thay đổi theo từng chuyến, có cân nhắc thời tiết, cung cầu và lưu lượng giao thông.</p></details>
+          <details><summary>Tài xế muốn thắc mắc hoặc khiếu nại về phí thì làm thế nào?</summary>
+            <p>Tài xế truy cập mục Trợ Giúp trực tiếp trên ứng dụng Grab Driver để được hỗ trợ. Điều khoản chi tiết xem tại "Điều khoản dịch vụ dành cho Đối tác tài xế".</p></details>
+        </div>
+
+        <div class="grp">
+          <h3>Chính sách và an sinh tài xế</h3>
+          <details><summary>Khi tài xế gặp tai nạn, quy trình hỗ trợ ra sao?</summary>
+            <p>Tài xế liên hệ Đội trưởng hoặc Grab Cơ Động, báo công an, đi khám rồi thông báo Grab. Hồ sơ bảo hiểm nộp trong 30 ngày.</p></details>
+        </div>
+
+        <div class="grp">
+          <h3>Lừa đảo và mạo danh</h3>
+          <details><summary>Làm sao nhận biết người mạo danh nhân viên Grab?</summary>
+            <p>Grab không yêu cầu mã OTP, mật khẩu hay chuyển tiền ngoài ứng dụng. Chỉ liên hệ qua mục Trợ giúp trong ứng dụng hoặc các kênh chính thức của Grab.</p></details>
+          <details><summary>Tài xế bị lừa thì xử lý thế nào?</summary>
+            <p>Không cung cấp thêm OTP hoặc mật khẩu, đổi mật khẩu ứng dụng, khóa tài khoản ngân hàng, trình báo công an và báo Grab qua Trung tâm Trợ giúp trong ứng dụng Grab Driver.</p></details>
+        </div>
+
+        <div class="grp">
+          <h3>An toàn dữ liệu và tài khoản</h3>
+          <details><summary>Grab bảo vệ dữ liệu và tài khoản người dùng thế nào?</summary>
+            <p>Thông tin cá nhân và giao dịch thanh toán được mã hóa; ví Moca yêu cầu GrabPIN khi truy cập thông tin nhạy cảm; người dùng có thể bật vân tay hoặc Face ID. Tài xế phải xác minh khuôn mặt bằng ảnh tự chụp thời gian thực.</p></details>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5. thông tin nền + tư liệu -->
+    <section class="alt">
+      <div class="wrap">
+        <h2>Về Grab tại Việt Nam</h2>
+        <div class="cards">
+          <div class="card"><h3>Dịch vụ</h3><p>Di chuyển (GrabBike, GrabCar), giao đồ ăn (GrabFood), mua sắm (GrabMart) và giao hàng (GrabExpress).</p></div>
+          <div class="card"><h3>Thông tin doanh nghiệp</h3><p>Công ty TNHH Grab<br>Tòa nhà Mapletree Business Centre, 1060 Nguyễn Văn Linh, Phường Tân Hưng, TP. Hồ Chí Minh.</p></div>
+          <div class="card"><h3>Tư liệu truyền thông</h3><p>Hồ sơ công ty, hình ảnh, video và logo dành cho báo chí tại <a href="https://www.grab.com/vn/pressdownload/" target="_blank" rel="noopener">Thư viện báo chí của Grab</a>.</p></div>
+          <div class="card"><h3>Nguồn tin đáng tin cậy</h3><p>Liên kết tới thông báo của cơ quan chức năng, kết quả kiểm tra chính thức: <span class="ph">[liên kết]</span>.</p></div>
+        </div>
+        <p class="note" style="margin-top:22px">Chỉ tin thông tin từ trang này, ứng dụng Grab và các kênh chính thức của Grab. Grab không yêu cầu cung cấp mã OTP, mật khẩu hay chuyển tiền cá nhân.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><h4>Về Grab</h4><a href="#">Giới thiệu</a><a href="#">Trung tâm tin tức</a></div>
+      <div><h4>Người dùng</h4><a href="#">Dịch vụ</a><a href="#">An toàn</a></div>
+      <div><h4>Đối tác</h4><a href="#">Đối tác tài xế</a><a href="#">Đối tác thương nhân</a></div>
+      <div><h4>Hỗ trợ</h4><a href="#">Trung tâm hỗ trợ</a><a href="#">Điều khoản và chính sách</a></div>
+    </div>
+    <div class="legal">Công ty TNHH Grab. Mã số doanh nghiệp: 0312650437, do Sở Kế hoạch và Đầu tư TP. Hồ Chí Minh cấp lần đầu ngày 14 tháng 02 năm 2014.<br>Trang mô phỏng phục vụ bài tập môn CCM301 (Truyền thông khủng hoảng). Không phải trang chính thức của Grab.</div>
+  </div>
+</footer>
+
+<div class="simbar">
+  <button id="toggle" type="button" aria-pressed="true">CMT: tắt dark site (xem trạng thái chưa kích hoạt)</button>
+</div>
+
+<script>
+  var tabs=document.querySelectorAll('.tabs button');
+  tabs.forEach(function(b){
+    b.addEventListener('click',function(){
+      tabs.forEach(function(x){x.setAttribute('aria-selected','false')});
+      b.setAttribute('aria-selected','true');
+      document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on')});
+      document.getElementById('p-'+b.dataset.t).classList.add('on');
+    });
+  });
+  var tg=document.getElementById('toggle');
+  tg.addEventListener('click',function(){
+    var off=document.body.classList.toggle('off');
+    tg.setAttribute('aria-pressed',off?'false':'true');
+    tg.textContent=off?'CMT: kích hoạt dark site':'CMT: tắt dark site (xem trạng thái chưa kích hoạt)';
+  });
+</script>
+</body>
+</html>
